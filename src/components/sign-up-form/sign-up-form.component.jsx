@@ -37,6 +37,7 @@ const SignUpForm = () => {
         password
       );
       // console.log(response);
+
       await createUserDocumentFromAuth(user, {
         displayName,
       });

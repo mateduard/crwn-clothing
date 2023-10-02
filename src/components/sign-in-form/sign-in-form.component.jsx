@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
+
 import './sign-in-form.styles.scss';
 
 import {
@@ -32,23 +33,22 @@ const SignInForm = () => {
     setFormFields(defaultFormFields);
   };
 
-  const logGoogleUser = async () => {
+  const signInWithGoogle = async () => {
     try {
-        const { user } = await signInWithGooglePopup();
-        // console.log(user);
-        await createUserDocumentFromAuth(user);
+      await signInWithGooglePopup();
+      // console.log(user);
+      
     } catch (error) {
-        if(error.code === 'auth/popup-closed-by-user') {
-            alert('Log-in failed: Google Pop-up closed by user.')
-        }
+      if (error.code === 'auth/popup-closed-by-user') {
+        alert('Log-in failed: Google Pop-up closed by user.');
+      }
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
@@ -69,7 +69,7 @@ const SignInForm = () => {
       <form onSubmit={handleSubmit}>
         <FormInput
           label="Email"
-          type="text"
+          type="email"
           required
           onChange={handleChange}
           name="email"
@@ -77,7 +77,7 @@ const SignInForm = () => {
         />
         <FormInput
           label="Password"
-          type="text"
+          type="password"
           required
           onChange={handleChange}
           name="password"
@@ -85,7 +85,7 @@ const SignInForm = () => {
         />
         <div className="buttons-container">
           <Button type="submit">Sign in</Button>
-          <Button buttonType="google" onClick={logGoogleUser} type="button">
+          <Button buttonType="google" onClick={signInWithGoogle} type="button">
             Google Sign In
           </Button>
         </div>
