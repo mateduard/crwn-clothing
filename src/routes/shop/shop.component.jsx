@@ -8,7 +8,7 @@ const Shop = () => {
   return (
     <div className="products-container">
       {products.map((product) => (
-        <ProductCard onClick={() => console.log('hai norok')} key={product.id} product={product}></ProductCard>
+        <ProductCard key={product.id} product={product}></ProductCard>
       ))}
     </div>
   );
